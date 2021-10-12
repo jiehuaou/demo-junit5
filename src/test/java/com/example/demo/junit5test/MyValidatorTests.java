@@ -19,10 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * to trigger the validation
  */
 
-//@SpringBootTest
-//@RunWith(MockitoJUnitRunner.class)
-//@Import(MyConfig.class)
-//@ExtendWith(MockitoExtension.class)
 public class MyValidatorTests {
 
     MyService testValidator;

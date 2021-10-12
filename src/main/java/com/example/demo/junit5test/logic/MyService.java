@@ -14,8 +14,8 @@ import javax.validation.Valid;
 
 @Service
 @Validated
-public class MyValidator {
-    public String validate(@Valid CatalogueItem c){
+public class MyService {
+    public String doSomething(@Valid CatalogueItem c){
         return "Valid";
     }
 }

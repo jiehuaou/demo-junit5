@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 import java.util.Set;
 
 @Log4j2
-public class ValidationAdvice implements MethodBeforeAdvice {
+public class MyValidationAdvice implements MethodBeforeAdvice {
     static private ExecutableValidator executableValidator;
     static {
         // Using the javax validation factory mostly works, but doesn't capture the parameter names
