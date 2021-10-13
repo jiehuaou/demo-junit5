@@ -7,8 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,14 +18,15 @@ import static org.mockito.Mockito.when;
 
 /**
  * service level test
- * SpringExtension + ContextConfiguration + Autowired
+ * SpringExtension + ContextConfiguration + Autowired + MockBean (springframework)
  */
+
 @Log4j2
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(classes = TestAppConfig.class)
-public class MyServerTests2 {
+public class MyServerTests3 {
 
-    @Autowired
+    @MockBean
     private HelloRepository helloRepository;
 
     @Autowired
@@ -34,7 +34,9 @@ public class MyServerTests2 {
 
     @BeforeEach
     void setMockOutput() {
-        // when(helloRepository.get()).thenReturn("Hello Mockito From Repository");
+        Mockito
+                .when(helloRepository.get())
+                .thenReturn("Mock Hello");
     }
 
     @DisplayName("Test helloService + helloRepository via SpringExtension")
@@ -43,8 +45,8 @@ public class MyServerTests2 {
         //
         log.info("repo.get --> {}", helloRepository.get());
         log.info("svc.get --> {}", helloService.get());
-        assertEquals("junit5", helloRepository.get());
-        assertEquals("junit5", helloService.get());
+        assertEquals("Mock Hello", helloRepository.get());
+        assertEquals("Mock Hello", helloService.get());
     }
 
 }
