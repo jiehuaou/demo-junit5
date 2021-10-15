@@ -35,4 +35,13 @@ public class MyController {
 
     }
 
+    @GetMapping("/data3/{id}")
+    public Mono<ResponseEntity<String>> getData3(@PathVariable("id") Long id){
+
+        return helloRepository.findData(id)
+                .flatMap(x-> Mono.just(ResponseEntity.ok(x)))
+                .switchIfEmpty(Mono.just(ResponseEntity.badRequest().body("not-found")));
+
+    }
+
 }
