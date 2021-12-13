@@ -89,3 +89,10 @@ public class MyService {
     }
 }
 ```
+
+# AutoConfigureMockMvc vs WebMvcTest
+
+- AutoConfigureMockMvc, the full Spring application context is started but without the server. 
+- WebMvcTest, can narrow the tests to only the web layer,
+
+
