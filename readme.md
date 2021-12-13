@@ -94,8 +94,42 @@ public class MyService {
 
 ## @AutoConfigureMockMvc, 
     the full Spring application context is started but without the server. need to work with @SpringBootTest.
+```java
+@SpringBootTest
+@AutoConfigureMockMvc
+public class HelloControllerHeavyTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    public void shouldReturnDefaultMessage() throws Exception {
+        this.mockMvc.perform(get("/hello/333")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Hello, 333")));
+    }
+}
+
+```
     
 ## @WebMvcTest, 
     can narrow the tests to only the web layer, you need to inject the dependency bean via @MockBean.
+```java
+@WebMvcTest(controllers = {HelloController.class})
+public class HelloControllerLightTest {
+    @Autowired
+    private MockMvc mockMvc;
 
+    @MockBean
+    private HelloService helloService;
+
+    @Test
+    public void shouldReturnDefaultMessage() throws Exception {
+        // when
+        Mockito.when(helloService.greet("333")).thenReturn("Hello, 333");
+        // then
+        this.mockMvc.perform(get("/hello/333")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Hello, 333")));
+    }
+}
+```
 
