@@ -17,4 +17,16 @@ public class HelloService {
     public String get() {
         return helloRepository.get();
     }
+
+    public String getData(Long id) {
+        return helloRepository.getData(id);
+    }
+
+    public void createData(String data) {
+        helloRepository.create(data);
+    }
+
+    public String greet(String id) {
+        return "Hello, " + id;
+    }
 }

@@ -12,8 +12,11 @@ import reactor.core.publisher.Mono;
 @RestController
 public class MyController {
 
-    @Autowired
     HelloRepository helloRepository;
+
+    public MyController(HelloRepository helloRepository) {
+        this.helloRepository = helloRepository;
+    }
 
     @GetMapping("/ping")
     public Mono<String> getPing(){
@@ -30,7 +33,7 @@ public class MyController {
     public Mono<ResponseEntity<String>> getData2(@PathVariable("id") Long id){
 
         return helloRepository.findData(id)
-                .map(x-> ResponseEntity.ok(x))
+                .map(ResponseEntity::ok)
                 .switchIfEmpty(Mono.just(ResponseEntity.badRequest().body("not-found")));
 
     }
@@ -41,6 +44,13 @@ public class MyController {
         return helloRepository.findData(id)
                 .flatMap(x-> Mono.just(ResponseEntity.ok(x)))
                 .switchIfEmpty(Mono.just(ResponseEntity.badRequest().body("not-found")));
+
+    }
+
+    @GetMapping("/data4/{id}")
+    public ResponseEntity<String> getData4(@PathVariable("id") Long id){
+
+        return ResponseEntity.ok(helloRepository.getData(id));
 
     }
 
