@@ -3,6 +3,7 @@ package com.example.demo.junit5test.svc;
 import com.example.demo.junit5test.repo.HelloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 @Service
 public class HelloService {
@@ -24,6 +25,10 @@ public class HelloService {
 
     public void createData(String data) {
         helloRepository.create(data);
+    }
+
+    public Mono<String> findData(Long id){
+        return helloRepository.findData(id);
     }
 
     public String greet(String id) {
