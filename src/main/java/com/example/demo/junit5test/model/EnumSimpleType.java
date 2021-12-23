@@ -1,13 +1,16 @@
 package com.example.demo.junit5test.model;
 
-public enum EnumType {
-    HELLO("HELLO"),
-    WORLD("WORLD"),
-    EPAM("EPAM");
+/**
+ * use valueOf() --> EnumSimpleType
+ */
+public enum EnumSimpleType {
+    HELLO("HE"),
+    WORLD("WR"),
+    EPAM("EP");
 
     private final String value;
 
-    EnumType(String value) {
+    EnumSimpleType(String value) {
         this.value = value;
     }
 
@@ -20,4 +23,6 @@ public enum EnumType {
     public String toString() {
         return value;
     }
+
+
 }

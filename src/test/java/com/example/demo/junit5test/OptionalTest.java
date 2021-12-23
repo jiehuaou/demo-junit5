@@ -21,4 +21,13 @@ public class OptionalTest {
         String out = data.map(String::toUpperCase).orElse("world");
         Assertions.assertEquals("world", out);
     }
+
+    @Test
+    void testMapElse3(){
+        Optional<String> data = Optional.of("Hello");
+        String out = data
+                .filter(s->s.equalsIgnoreCase("hello-1"))
+                .orElse("world");
+        Assertions.assertEquals("world", out);
+    }
 }
