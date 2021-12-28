@@ -23,12 +23,15 @@ public class LambdaTests {
     static void makeLazyCall(int value){
         int i = Math.floorMod(value,2);
         if(i==0){
+            /*
             Function<String, String> lazy = (e)->{
+                return "hello " + "world";
+            };*/
+            log.info(()->{
                 // this.getClass() not work here
                 System.out.println("concat string [hello world] in lambda, where there is no 'This' pointer " );
                 return "hello " + "world";
-            };
-            log.info(lazy.apply(""));
+            });
         }else{
             log.info("Lambda was not invoked");
         }

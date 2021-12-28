@@ -1,5 +1,6 @@
 package com.example.demo.junit5test;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 //import lombok.Value;
 import lombok.extern.log4j.Log4j2;
