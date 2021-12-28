@@ -23,11 +23,33 @@ public class OptionalTest {
     }
 
     @Test
-    void testMapElse3(){
+    void testFilterElse(){
         Optional<String> data = Optional.of("Hello");
         String out = data
                 .filter(s->s.equalsIgnoreCase("hello-1"))
                 .orElse("world");
         Assertions.assertEquals("world", out);
+    }
+
+    Optional<String> getOptional(String text){
+        if("empty".equalsIgnoreCase(text)){
+            return Optional.empty();
+        }
+        return Optional.of(text);
+    }
+
+    @Test
+    void testOptionalEqual(){
+        // test equal
+        Optional<String> actual = getOptional("hello");
+
+        Assertions.assertEquals(Optional.of("hello"), actual);
+
+        // test not equal
+        Optional<String> empty = getOptional("empty");
+        Assertions.assertTrue(empty.isEmpty());
+        Assertions.assertNotEquals(Optional.of("hello"), empty);
+
+
     }
 }

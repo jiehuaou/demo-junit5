@@ -1,5 +1,6 @@
 package com.example.demo.junit5test;
 
+import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
@@ -12,6 +13,8 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 /**
  * Dynamic Test
  */
+
+@Log4j2
 public class DynamicTestsDemo {
     private final AssertionsDemo.Calculator calculator = new AssertionsDemo.Calculator();
 

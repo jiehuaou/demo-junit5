@@ -5,12 +5,14 @@ import com.example.demo.junit5test.model.EnumSimpleType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
+import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Log4j2
 public class EnumTests {
 
     @Getter
@@ -40,17 +42,18 @@ public class EnumTests {
     @Test
     public void testFromString1(){
         EnumSimpleType enumType = EnumSimpleType.valueOf("EPAM");
-        System.out.println(enumType);
+        log.info(enumType);
         Assertions.assertEquals(enumType, EnumSimpleType.EPAM);
     }
 
     @Test
     public void testFromStringException(){
         Exception ex = Assertions.assertThrows(IllegalArgumentException.class, ()->{
+            log.info("try convert");
             EnumSimpleType enumType = EnumSimpleType.valueOf("EPAM-X");
-            System.out.println(enumType);
+
         });
-        System.out.println(ex.getMessage());
+        log.info(ex.getMessage());
         Assertions.assertTrue(ex.getMessage().contains("EPAM-X"));
         Assertions.assertTrue(ex.getMessage().contains("No enum constant"));
     }
@@ -60,7 +63,7 @@ public class EnumTests {
         SimpleDataDTO dataWithEnum = SimpleDataDTO.builder().data("foo").simple(EnumSimpleType.EPAM).build();
         ObjectMapper objectMapper = new ObjectMapper();
         String ss = objectMapper.writeValueAsString(dataWithEnum);
-        System.out.println(ss);
+        log.info(ss);
     }
     //{"data":"foo","enumType":"EPAM"}
     @Test
