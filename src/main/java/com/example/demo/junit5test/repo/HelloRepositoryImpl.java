@@ -1,5 +1,6 @@
 package com.example.demo.junit5test.repo;
 
+import com.example.demo.junit5test.model.Box;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
@@ -30,5 +31,10 @@ public class HelloRepositoryImpl implements HelloRepository{
     @Override
     public void create(String data) {
         System.out.println("data created ==> " + data);
+    }
+
+    @Override
+    public Mono<Box> findBox(Long id) {
+        return Mono.just(new Box(10));
     }
 }
