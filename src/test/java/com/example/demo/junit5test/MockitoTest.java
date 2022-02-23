@@ -97,10 +97,16 @@ public class MockitoTest {
         Mockito.when(sampleInterface.invoke("123", new ArrayList<>())).thenReturn("hello");
         String result = sampleInterface.invoke("123", new ArrayList<>());
         Assertions.assertEquals("hello", result);
+        Mockito.verify(sampleInterface, Mockito.times(1)).invoke("123", new ArrayList());
 
         // argument are all matchers.
-        Mockito.when(sampleInterface.invoke(Mockito.eq("123"), Mockito.any(List.class))).thenReturn("world");
-        String result2 = sampleInterface.invoke("123", new ArrayList<>());
+        Mockito.when(sampleInterface.invoke(Mockito.eq("996"), Mockito.any(List.class))).thenReturn("world");
+        String result2 = sampleInterface.invoke("996", new ArrayList<>());
         Assertions.assertEquals("world", result2);
+        Mockito.verify(sampleInterface, Mockito.times(1)).invoke("996", new ArrayList<>());
+
+        // 2 times for any-String and any-object
+        Mockito.verify(sampleInterface, Mockito.times(2))
+                .invoke(Mockito.anyString(), Mockito.any());
     }
 }
