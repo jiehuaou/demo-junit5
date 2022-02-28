@@ -182,3 +182,41 @@ public class HelloControllerLightTest {
 __MockMvc__ isn't loaded for the __WebFlux__ configuration in Spring Boot. You need to use __WebTestClient__ instead. 
 
 So replace AutoConfigureMockMvc with AutoConfigureWebTestClient and utilize the the webTestClient methods in its place.
+
+
+# ConditionalOnProperty and Testing
+
+
+@Configuration
+```java
+...
+@Bean(name = "my-repository")
+@ConditionalOnProperty(name = "new.config.use", havingValue = "true")
+public MyRepository getRepository1(SubRepository subRepository){
+        return new MyRepositoryNew(subRepository);
+        }
+
+@Bean(name = "my-repository")
+@ConditionalOnProperty(name = "new.config.use", havingValue = "false")
+public MyRepository getRepository2(SubRepository subRepository){
+        return new MyRepositoryOld(subRepository);
+        }
+```
+For testing with Autowire, use TestPropertySource to specify condition property 
+```java
+@ExtendWith({ SpringExtension.class })
+@ContextConfiguration(classes = TestConfig.class)
+@TestPropertySource(properties = {"new.config.use=false"})
+public class TestRepoOld {
+
+	@Autowired
+	@Qualifier("my-repository")
+	private MyRepository repo;
+
+	@Test
+	void testOldRepo() {
+		String text = repo.hello();
+		Assertions.assertEquals("Old->world", text);
+	}
+}
+```
