@@ -3,12 +3,11 @@ package com.example.demo.junit5test;
 
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class OptionalTest {
     @Test
@@ -121,5 +120,38 @@ public class OptionalTest {
                 .ifPresentOrElse(e->{}, ()->System.out.println("found nothing here"));
     }
 
+    @Test
+    @DisplayName("stream with optional to avoid null point exception")
+    void testStreamWithOptional() {
+        ObjectWithList testObject1 = new ObjectWithList(Arrays.asList("abc", "www"));
+        ObjectWithList testObject2 = new ObjectWithList(null);
+
+        List<ObjectWithList> list = Arrays.asList(testObject1, testObject2);
+
+        List<String> list2 = list.stream()
+                .map(e -> Optional.ofNullable(e.getData()).orElseGet(Collections::emptyList))
+                .flatMap(e -> e.stream())
+                .map(s -> s + "000")
+                .collect(Collectors.toList())
+        ;
+
+        System.out.println(list2);
+
+    }
+
+    public static class ObjectWithList{
+        private final List<String> data ;
+
+        public ObjectWithList(List<String> data) {
+            this.data = data;
+        }
+
+
+        public List<String> getData() {
+            return data;
+        }
+
+
+    }
 
 }
