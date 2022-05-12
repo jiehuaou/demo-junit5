@@ -13,15 +13,33 @@ public class OptionalTest {
     @Test
     void testMapElse1(){
         Optional<String> data = Optional.of("hello");
-        String out = data.map(s->s+"-001").orElse("world");
+        String out = data.map(s->s+"-001").orElse("else");
         Assertions.assertEquals("hello-001", out);
     }
 
     @Test
     void testMapElse2(){
         Optional<String> data = Optional.empty();
-        String out = data.map(String::toUpperCase).orElse("world");
-        Assertions.assertEquals("world", out);
+        String out = data.map(String::toUpperCase).orElse("else");
+        Assertions.assertEquals("else", out);
+    }
+
+    @Test
+    void testMapChain1(){
+        Optional<ComplexData> data = Optional.ofNullable(new ComplexData("abc",
+                Arrays.asList("a1","a2")));
+        String out = data.map(e -> e.items).map(e -> e.get(0)).orElse("else");
+        Assertions.assertEquals("a1", out);
+    }
+
+    @Test
+    void testMapChain2(){
+        ComplexData complexData = new ComplexData("abc", null);
+        String out = Optional.ofNullable(complexData)
+                .map(e -> e.items)
+                .map(e -> e.get(0))
+                .orElse("else");
+        Assertions.assertEquals("else", out);
     }
 
     @Test
@@ -29,8 +47,8 @@ public class OptionalTest {
         Optional<String> data = Optional.of("Hello");
         String out = data
                 .filter(s->s.equalsIgnoreCase("hello-1"))
-                .orElse("world");
-        Assertions.assertEquals("world", out);
+                .orElse("else");
+        Assertions.assertEquals("else", out);
     }
 
     Optional<String> getOptional(String text){
@@ -57,7 +75,7 @@ public class OptionalTest {
 
         ComplexData(String name, List<String> items) {
             this.name = name;
-            this.items = new ArrayList<>(items);
+            this.items = items;
         }
 
         @Override
@@ -106,7 +124,7 @@ public class OptionalTest {
         Assertions.assertNotEquals(Optional.of("hello"), empty);
 
         // not equal
-        Assertions.assertNotEquals(Optional.of("hello"), Optional.of("world"));
+        Assertions.assertNotEquals(Optional.of("hello"), Optional.of("else"));
 
 
     }
