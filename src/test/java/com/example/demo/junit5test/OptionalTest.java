@@ -25,6 +25,26 @@ public class OptionalTest {
     }
 
     @Test
+    void testAllNull() {
+        String s1 = null;
+        String s2 = null;
+        String s3 = null;
+        String test = Optional.ofNullable(s1).map(s -> s2).map(s -> s3).orElse("all_is_null");
+        Assertions.assertEquals("all_is_null", test);
+    }
+
+    @Test
+    void testAllNotNull() {
+        String s1 = "1";
+        String s2 = "2";
+        String s3 = "3";
+        String test = Optional.ofNullable(s1).map(s -> s2).map(s -> s3)
+                .map(s -> s1+s2+s3)
+                .orElse("all_is_null");
+        Assertions.assertEquals("123", test);
+    }
+
+    @Test
     void testMapChain1(){
         Optional<ComplexData> data = Optional.ofNullable(new ComplexData("abc",
                 Arrays.asList("a1","a2")));
