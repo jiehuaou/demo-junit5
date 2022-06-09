@@ -25,12 +25,12 @@ public class OptionalTest {
     }
 
     @Test
-    void testAllNull() {
-        String s1 = null;
+    void testAnyOneNull() {
+        String s1 = "1";
         String s2 = null;
-        String s3 = null;
-        String test = Optional.ofNullable(s1).map(s -> s2).map(s -> s3).orElse("all_is_null");
-        Assertions.assertEquals("all_is_null", test);
+        String s3 = "3";
+        String test = Optional.ofNullable(s1).map(s -> s2).map(s -> s3).orElse("any_one_null");
+        Assertions.assertEquals("any_one_null", test);
     }
 
     @Test
@@ -45,6 +45,7 @@ public class OptionalTest {
     }
 
     @Test
+    @DisplayName("get non-null property from hierarchy 1")
     void testMapChain1(){
         Optional<ComplexData> data = Optional.ofNullable(new ComplexData("abc",
                 Arrays.asList("a1","a2")));
@@ -53,6 +54,7 @@ public class OptionalTest {
     }
 
     @Test
+    @DisplayName("get non-null property from hierarchy when there is null")
     void testMapChain2(){
         ComplexData complexData = new ComplexData("abc", null);
         String out = Optional.ofNullable(complexData)
