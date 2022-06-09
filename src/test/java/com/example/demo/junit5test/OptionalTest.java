@@ -29,7 +29,9 @@ public class OptionalTest {
         String s1 = "1";
         String s2 = null;
         String s3 = "3";
-        String test = Optional.ofNullable(s1).map(s -> s2).map(s -> s3).orElse("any_one_null");
+        String test = Optional.ofNullable(s1).map(s -> s2).map(s -> s3)
+                .map(s -> "all_non_null")
+                .orElse("any_one_null");
         Assertions.assertEquals("any_one_null", test);
     }
 
@@ -40,7 +42,8 @@ public class OptionalTest {
         String s3 = "3";
         String test = Optional.ofNullable(s1).map(s -> s2).map(s -> s3)
                 .map(s -> s1+s2+s3)
-                .orElse("all_is_null");
+                .orElse("any_one_null");
+
         Assertions.assertEquals("123", test);
     }
 
