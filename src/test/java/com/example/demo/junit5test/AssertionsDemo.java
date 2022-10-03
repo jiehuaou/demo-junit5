@@ -1,23 +1,27 @@
 package com.example.demo.junit5test;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-//import lombok.Value;
-import lombok.extern.log4j.Log4j2;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeout;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.condition.OS.LINUX;
+import static org.junit.jupiter.api.condition.OS.MAC;
+
+import java.time.Duration;
+
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.condition.EnabledOnOs;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Description;
 
-import java.time.Duration;
-
-import static java.time.Duration.ofMillis;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.condition.OS.LINUX;
-import static org.junit.jupiter.api.condition.OS.MAC;
+import lombok.Data;
+//import lombok.Value;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * Assertions method demo
@@ -163,6 +167,15 @@ public class AssertionsDemo {
 
     boolean customCondition() {
         return true;
+    }
+
+    @Test
+    @Description("assert string contain or not")
+    public void testContainString() {
+        
+        Assertions.assertThat("foo bar").contains("foo");
+
+        Assertions.assertThat("foo bar").doesNotContain("hello");
     }
 
 }
